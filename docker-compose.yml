@@ -1,6 +1,6 @@
 services:
   code:
-    image: ghcr.io/coder/code-server:latest
+    build: .
     container_name: code-server
     restart: unless-stopped
     environment:
@@ -11,4 +11,6 @@ services:
       - /srv/projects:/home/coder/project
     # bind only to localhost so it's not exposed publicly; Apache will proxy to it
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8701:8080" # code server
+      - "127.0.0.1:8702:8000" # pelican
+      - "127.0.0.1:8703:35729" # livereload
