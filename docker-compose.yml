@@ -8,9 +8,17 @@ services:
       # optional: SUDO_PASSWORD: ${SUDO_PASSWORD}
     volumes:
       - /srv/code-server/data:/home/coder/.local/share/code-server
-      - /srv/projects:/home/coder/project
+      - /srv/projects:/home/coder/projects
+      - /srv/websites:/home/coder/websites:ro
+      - /srv/websites/taiwofasae:/home/coder/taiwofasae
+      - venv:/home/coder/taiwofasae/.venv
+      - output:/home/coder/taiwofasae/output
     # bind only to localhost so it's not exposed publicly; Apache will proxy to it
     ports:
       - "127.0.0.1:8701:8080" # code server
       - "127.0.0.1:8702:8000" # pelican
       - "127.0.0.1:8703:35729" # livereload
+
+volumes:
+  venv:
+  output:
