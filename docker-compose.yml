@@ -1,7 +1,6 @@
 services:
-  code:
+  codeserver:
     build: .
-    container_name: code-server
     restart: unless-stopped
     environment:
       PASSWORD: ${CODE_PASSWORD}   # required
