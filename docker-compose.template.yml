@@ -1,0 +1,23 @@
+services:
+  codeserver:
+    build: .
+    restart: unless-stopped
+    environment:
+      PASSWORD: ${CODE_PASSWORD}   # required
+      # optional: SUDO_PASSWORD: ${SUDO_PASSWORD}
+    volumes:
+      - /srv/code-server/data:/home/coder/.local/share/code-server
+      - /srv/projects:/home/coder/projects
+      - /srv/websites:/home/coder/websites:ro
+      - /srv/websites/[website-folder]:/home/coder/[website-folder]
+      - venv:/home/coder/[website-folder]/.venv
+      - output:/home/coder/[website-folder]/output
+    # bind only to localhost so it's not exposed publicly; Apache will proxy to it
+    ports:
+      - "127.0.0.1:[codeserver_port]:8080" # code server
+      - "127.0.0.1:[pelican_port]:8000" # pelican
+      - "127.0.0.1:[livereload_port]:35729" # livereload
+
+volumes:
+  venv:
+  output:
